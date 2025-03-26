@@ -90,21 +90,6 @@ namespace abdeevLanguage
                 return "нет";
             }
         }
-
-        public DateTime LastVisitDate
-        {
-            get
-            {
-                var cur = ClientService.OrderBy(p => p.StartTime).LastOrDefault();
-
-                if (cur != null)
-                    return cur.StartTime;
-                else
-                    return DateTime.MinValue;
-                
-            }
-        }
-
         public string GenderName
         {
             get

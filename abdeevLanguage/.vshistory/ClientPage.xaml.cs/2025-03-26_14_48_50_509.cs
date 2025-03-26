@@ -44,13 +44,12 @@ namespace abdeevLanguage
                 case 2:
                     currentOutputPages = 200; break;
                 case 3:
-                    currentOutputPages = CountRecords == 0 ? 1 : CountRecords;
-                    break;
+                    currentOutputPages = CountRecords; break;
                 default:
                     MessageBox.Show("ошибка!");
                     break;
             }
-            if (CountRecords % currentOutputPages > 0)
+            if (CountRecords % currentOutputPages >= 0)
                 CountPage = CountRecords / currentOutputPages + 1;
             else
                 CountPage = CountRecords / currentOutputPages;
@@ -130,6 +129,9 @@ namespace abdeevLanguage
 
             switch (FilterComboBox.SelectedIndex)
             {
+                //case 0:
+                //    currentClient = currentClient.Where(p => p.Gen);
+                //    break;
                 case 1:
                     currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
                     break;

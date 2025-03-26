@@ -18,19 +18,19 @@
         <WrapPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Поиск:" FontSize="15"></TextBlock>
-                <TextBox  Margin="5,0,0,0" Name="SearchTB" Width="200" FontSize="15" TextChanged="SearchTB_TextChanged"></TextBox>
+                <TextBox Name="SearchTB" Width="200" FontSize="15" TextChanged="SearchTB_TextChanged"></TextBox>
             </StackPanel>
-            <StackPanel Margin="25,0,0,0" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пол:" FontSize="15"></TextBlock>
-                <ComboBox Margin="5,0,0,0" Name="FilterComboBox" Width="100" SelectionChanged="FilterComboBox_SelectionChanged" FontSize="15">
+                <ComboBox Name="FilterComboBox" Width="100" SelectionChanged="FilterComboBox_SelectionChanged" FontSize="15">
                     <TextBlock>Все</TextBlock>
                     <TextBlock>Женский</TextBlock>
                     <TextBlock>Мужской</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Margin="25,0,0,0" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Сортировка:" FontSize="15"></TextBlock>
-                <ComboBox  Margin="5,0,0,0" FontSize="15" Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged" Width="250">
+                <ComboBox FontSize="15" Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged" Width="250">
                     <TextBlock>нет</TextBlock>
                     <TextBlock>по фамилии от А до Я</TextBlock>
                     <TextBlock>по дате последнего посещения</TextBlock>
@@ -82,7 +82,7 @@
                         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
                             <TextBlock Text="Телефон:"  HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                             <TextBlock Text="{Binding Phone}" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
-                            <TextBlock Text=" Email: " HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
+                            <TextBlock Text="Email: " HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                             <TextBlock Text="{Binding Email}" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         </StackPanel>
                         <Button Grid.Column="2" Grid.Row="2" Name="DeleteBtn" HorizontalAlignment="Right" Content="Удалить" Click="DeleteBtn_Click"></Button>

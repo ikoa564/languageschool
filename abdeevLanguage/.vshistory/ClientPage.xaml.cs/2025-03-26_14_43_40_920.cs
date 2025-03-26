@@ -44,8 +44,7 @@ namespace abdeevLanguage
                 case 2:
                     currentOutputPages = 200; break;
                 case 3:
-                    currentOutputPages = CountRecords == 0 ? 1 : CountRecords;
-                    break;
+                    currentOutputPages = CountRecords; break;
                 default:
                     MessageBox.Show("ошибка!");
                     break;
@@ -130,6 +129,9 @@ namespace abdeevLanguage
 
             switch (FilterComboBox.SelectedIndex)
             {
+                //case 0:
+                //    currentClient = currentClient.Where(p => p.Gen);
+                //    break;
                 case 1:
                     currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
                     break;
@@ -138,7 +140,9 @@ namespace abdeevLanguage
                     break;
             }
 
-            currentClient = currentClient.Where(p => p.FullName.ToLower().Contains(SearchTB.Text.ToLower()) ||
+            currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
+            p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) ||
+            p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
             p.Email.ToLower().Contains(SearchTB.Text.ToLower()) 
             || p.Phone.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Contains(SearchTB.Text.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", ""))).ToList();
 

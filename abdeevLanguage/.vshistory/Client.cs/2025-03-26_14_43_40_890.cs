@@ -97,10 +97,7 @@ namespace abdeevLanguage
             {
                 var cur = ClientService.OrderBy(p => p.StartTime).LastOrDefault();
 
-                if (cur != null)
-                    return cur.StartTime;
-                else
-                    return DateTime.MinValue;
+                return cur.StartTime;
                 
             }
         }
