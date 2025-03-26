@@ -25,7 +25,7 @@ namespace abdeevLanguage
             InitializeComponent();
             MainFrame.Navigate(new ClientPage());
             Manager.MainFrame = MainFrame;
-            
+
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

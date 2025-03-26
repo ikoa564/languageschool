@@ -10,36 +10,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <WrapPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Поиск:" FontSize="15"></TextBlock>
-                <TextBox Name="SearchTB" Width="200" FontSize="15" TextChanged="SearchTB_TextChanged"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Пол:" FontSize="15"></TextBlock>
-                <ComboBox Name="FilterComboBox" Width="100" SelectionChanged="FilterComboBox_SelectionChanged" FontSize="15">
-                    <TextBlock>Все</TextBlock>
-                    <TextBlock>Женский</TextBlock>
-                    <TextBlock>Мужской</TextBlock>
-                </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Сортировка:" FontSize="15"></TextBlock>
-                <ComboBox FontSize="15" Name="SortComboBox" SelectionChanged="SortComboBox_SelectionChanged" Width="250">
-                    <TextBlock>нет</TextBlock>
-                    <TextBlock>по фамилии от А до Я</TextBlock>
-                    <TextBlock>по дате последнего посещения</TextBlock>
-                    <TextBlock>по количеству посещений</TextBlock>
-                </ComboBox>
-            </StackPanel>
-        </WrapPanel>
-
-        <ListView Grid.Row="1" Name="ClientListView">
+        <ListView Grid.Row="0" Name="ClientListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -100,19 +75,19 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <StackPanel  Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <TextBlock Name="FirstPageCountTB" FontSize="20"></TextBlock>
             <TextBlock Name="SecondPageCountTB" FontSize="20"></TextBlock>
-            <StackPanel Margin="25,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Margin="25,0,0,0" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <TextBlock FontSize="20" Text="Выводить по: "></TextBlock>
-                <ComboBox Name="OutputComboBox" SelectionChanged="OutputComboBox_SelectionChanged" FontSize="20" Width="70">
+                <ComboBox Name="OutputComboBox" FontSize="20" Width="70">
                     <TextBlock>10</TextBlock>
                     <TextBlock>50</TextBlock>
                     <TextBlock>200</TextBlock>
                     <TextBlock>Все</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <Button Margin="25,0,0,0" Name="LeftDirButton" Content="&lt;" Width="23" Height="30" Click="LeftDirButton_Click"></Button>
+            <Button Margin="25,0,0,0" Name="LeftDirButton" Content="&lt;" Width="20" Height="20" Click="LeftDirButton_Click"></Button>
             <ListBox FontSize="20" Name="PageListBox" MouseUp="PageListBox_MouseUp">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -120,7 +95,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button Name="RightDirButton" Content="&gt;" Width="23" Height="30" Click="RightDirButton_Click"></Button>
+            <Button Name="RightDirButton" Content="&gt;" Width="20" Height="20" Click="RightDirButton_Click"></Button>
 
         </StackPanel>
 

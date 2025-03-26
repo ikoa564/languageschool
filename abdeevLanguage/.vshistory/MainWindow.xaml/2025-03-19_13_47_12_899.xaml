@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:abdeevLanguage"
         mc:Ignorable="d"
-        Title="Языковая школа" Height="650" Width="1190" MinHeight="650" MinWidth="1190" FontFamily="Comic Sans MS" Icon="res/school_logo.ico" >
+        Title="Языковая школа" Height="550" Width="890" MinHeight="550" MinWidth="850" FontFamily="Comic Sans MS" Icon="res/school_logo.ico" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -17,6 +17,5 @@
         <Button Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Назад"></Button>
 
         <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered"></Frame>
-
     </Grid>
 </Window>

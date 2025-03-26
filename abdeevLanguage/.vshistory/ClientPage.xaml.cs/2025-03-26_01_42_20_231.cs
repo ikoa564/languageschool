@@ -31,9 +31,6 @@ namespace abdeevLanguage
         {
             int selectedOutput = OutputComboBox.SelectedIndex;
             int currentOutputPages = 0;
-            CurrentPageList.Clear();
-
-            CountRecords = TableList.Count;
 
             switch (selectedOutput)
             {
@@ -46,9 +43,11 @@ namespace abdeevLanguage
                 case 3:
                     currentOutputPages = CountRecords; break;
                 default:
-                    MessageBox.Show("ошибка!");
+                    MessageBox.Show("ERROR!");
                     break;
             }
+            CurrentPageList.Clear();
+            CountRecords = TableList.Count;
             if (CountRecords % currentOutputPages > 0)
                 CountPage = CountRecords / currentOutputPages + 1;
             else
@@ -102,7 +101,7 @@ namespace abdeevLanguage
                 PageListBox.SelectedIndex = CurrentPage;
 
                 min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                //FirstPageCountTB.Text = min.ToString();
+                FirstPageCountTB.Text = min.ToString();
 
                 ClientListView.ItemsSource = CurrentPageList;
                 ClientListView.Items.Refresh();
@@ -117,47 +116,16 @@ namespace abdeevLanguage
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
             ClientListView.ItemsSource = currentClient;
-            OutputComboBox.SelectedIndex = 3;
-            SortComboBox.SelectedIndex = 0;
-            FilterComboBox.SelectedIndex = 0;
+            OutputComboBox.SelectedIndex = 3;   
             UpdateClients();
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
         }
 
         public void UpdateClients()
         {
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
-            //switch (FilterComboBox.SelectedIndex)
-            //{
-            //    //case 0:
-            //    //    currentClient = currentClient.Where(p => p.Gen);
-            //    //    break;
-            //    case 1:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
-            //        break;
-            //    case 2:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
-            //        break;
-            //}
-
-            //currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) || 
-            //p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
-
-
-            //if (SortComboBox.SelectedIndex == 1)
-            //{
-            //    currentClient = currentClient.OrderBy(p => p.LastName).ToList();
-            //}
-            //if (SortComboBox.SelectedIndex == 3)
-            //    currentClient = currentClient.OrderBy(p => p.CountVisit).ToList();
-
-            //ClientListView.ItemsSource = currentClient;
-
-
             FirstPageCountTB.Text = currentClient.Count.ToString();
-            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TableList = currentClient;
             ChangePage(0, 0);
         }
@@ -208,21 +176,7 @@ namespace abdeevLanguage
         private void OutputComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateClients();
-        }
 
-        private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
         }
     }
 }

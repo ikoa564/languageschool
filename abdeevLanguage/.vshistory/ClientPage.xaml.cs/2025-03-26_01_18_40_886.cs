@@ -26,33 +26,14 @@ namespace abdeevLanguage
         List<Client> CurrentPageList = new List<Client>();
         List<Client> TableList;
 
-
         private void ChangePage(int direction, int? selectedPage)
         {
-            int selectedOutput = OutputComboBox.SelectedIndex;
-            int currentOutputPages = 0;
             CurrentPageList.Clear();
-
             CountRecords = TableList.Count;
-
-            switch (selectedOutput)
-            {
-                case 0:
-                    currentOutputPages = 10; break;
-                case 1:
-                    currentOutputPages = 50; break;
-                case 2:
-                    currentOutputPages = 200; break;
-                case 3:
-                    currentOutputPages = CountRecords; break;
-                default:
-                    MessageBox.Show("ошибка!");
-                    break;
-            }
-            if (CountRecords % currentOutputPages > 0)
-                CountPage = CountRecords / currentOutputPages + 1;
+            if (CountRecords % 10 > 0)
+                CountPage = CountRecords / 10 + 1;
             else
-                CountPage = CountRecords / currentOutputPages;
+                CountPage = CountRecords / 10;
 
             Boolean ifUpdate = true;
             int min;
@@ -61,8 +42,8 @@ namespace abdeevLanguage
                 if (selectedPage >= 0 && selectedPage <= CountPage)
                 {
                     CurrentPage = (int)selectedPage;
-                    min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                    for (int i = CurrentPage * currentOutputPages; i < min; i++)
+                    min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                    for (int i = CurrentPage * 10; i < min; i++)
                         CurrentPageList.Add(TableList[i]);
                 }
             }
@@ -74,8 +55,8 @@ namespace abdeevLanguage
                         if (CurrentPage > 0)
                         {
                             CurrentPage--;
-                            min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                            for (int i = CurrentPage * currentOutputPages; i < min; i++)
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
                                 CurrentPageList.Add(TableList[i]);
                         }
                         else
@@ -85,8 +66,8 @@ namespace abdeevLanguage
                         if (CurrentPage < CountPage - 1)
                         {
                             CurrentPage++;
-                            min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                            for (int i = CurrentPage * currentOutputPages; i < min; i++)
+                            min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                            for (int i = CurrentPage * 10; i < min; i++)
                                 CurrentPageList.Add(TableList[i]);
                         }
                         else
@@ -101,8 +82,8 @@ namespace abdeevLanguage
                     PageListBox.Items.Add(i);
                 PageListBox.SelectedIndex = CurrentPage;
 
-                min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                //FirstPageCountTB.Text = min.ToString();
+                min = CurrentPage * 10 + 10 < CountRecords ? CurrentPage * 10 + 10 : CountRecords;
+                FirstPageCountTB.Text = min.ToString();
 
                 ClientListView.ItemsSource = CurrentPageList;
                 ClientListView.Items.Refresh();
@@ -117,47 +98,16 @@ namespace abdeevLanguage
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
             ClientListView.ItemsSource = currentClient;
-            OutputComboBox.SelectedIndex = 3;
-            SortComboBox.SelectedIndex = 0;
-            FilterComboBox.SelectedIndex = 0;
             UpdateClients();
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
+            OutputComboBox.SelectedIndex = 3;
         }
 
         public void UpdateClients()
         {
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
-            //switch (FilterComboBox.SelectedIndex)
-            //{
-            //    //case 0:
-            //    //    currentClient = currentClient.Where(p => p.Gen);
-            //    //    break;
-            //    case 1:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
-            //        break;
-            //    case 2:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
-            //        break;
-            //}
-
-            //currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) || 
-            //p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
-
-
-            //if (SortComboBox.SelectedIndex == 1)
-            //{
-            //    currentClient = currentClient.OrderBy(p => p.LastName).ToList();
-            //}
-            //if (SortComboBox.SelectedIndex == 3)
-            //    currentClient = currentClient.OrderBy(p => p.CountVisit).ToList();
-
-            //ClientListView.ItemsSource = currentClient;
-
-
             FirstPageCountTB.Text = currentClient.Count.ToString();
-            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TableList = currentClient;
             ChangePage(0, 0);
         }
@@ -205,24 +155,5 @@ namespace abdeevLanguage
             }
         }
 
-        private void OutputComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
-        }
     }
 }

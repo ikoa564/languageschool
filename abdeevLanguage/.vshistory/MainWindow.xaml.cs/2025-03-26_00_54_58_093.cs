@@ -26,6 +26,7 @@ namespace abdeevLanguage
             MainFrame.Navigate(new ClientPage());
             Manager.MainFrame = MainFrame;
             
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

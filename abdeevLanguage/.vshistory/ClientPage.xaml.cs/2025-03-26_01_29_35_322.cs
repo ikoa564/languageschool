@@ -27,13 +27,9 @@ namespace abdeevLanguage
         List<Client> TableList;
 
 
-        private void ChangePage(int direction, int? selectedPage)
+        private void ChangePage(int direction, int? selectedPage, int selectedOutput)
         {
-            int selectedOutput = OutputComboBox.SelectedIndex;
             int currentOutputPages = 0;
-            CurrentPageList.Clear();
-
-            CountRecords = TableList.Count;
 
             switch (selectedOutput)
             {
@@ -44,11 +40,10 @@ namespace abdeevLanguage
                 case 2:
                     currentOutputPages = 200; break;
                 case 3:
-                    currentOutputPages = CountRecords; break;
-                default:
-                    MessageBox.Show("ошибка!");
-                    break;
+                    currentOutputPages = 9999; break;
             }
+            CurrentPageList.Clear();
+            CountRecords = TableList.Count;
             if (CountRecords % currentOutputPages > 0)
                 CountPage = CountRecords / currentOutputPages + 1;
             else
@@ -102,7 +97,7 @@ namespace abdeevLanguage
                 PageListBox.SelectedIndex = CurrentPage;
 
                 min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                //FirstPageCountTB.Text = min.ToString();
+                FirstPageCountTB.Text = min.ToString();
 
                 ClientListView.ItemsSource = CurrentPageList;
                 ClientListView.Items.Refresh();
@@ -117,65 +112,34 @@ namespace abdeevLanguage
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
             ClientListView.ItemsSource = currentClient;
-            OutputComboBox.SelectedIndex = 3;
-            SortComboBox.SelectedIndex = 0;
-            FilterComboBox.SelectedIndex = 0;
             UpdateClients();
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
+            OutputComboBox.SelectedIndex = 3;
         }
 
         public void UpdateClients()
         {
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
-            //switch (FilterComboBox.SelectedIndex)
-            //{
-            //    //case 0:
-            //    //    currentClient = currentClient.Where(p => p.Gen);
-            //    //    break;
-            //    case 1:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
-            //        break;
-            //    case 2:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
-            //        break;
-            //}
-
-            //currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) || 
-            //p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
-
-
-            //if (SortComboBox.SelectedIndex == 1)
-            //{
-            //    currentClient = currentClient.OrderBy(p => p.LastName).ToList();
-            //}
-            //if (SortComboBox.SelectedIndex == 3)
-            //    currentClient = currentClient.OrderBy(p => p.CountVisit).ToList();
-
-            //ClientListView.ItemsSource = currentClient;
-
-
             FirstPageCountTB.Text = currentClient.Count.ToString();
-            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TableList = currentClient;
-            ChangePage(0, 0);
+            ChangePage(0, 0, OutputComboBox.SelectedIndex);
         }
 
         private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
+            ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1, OutputComboBox.SelectedIndex);
         }
 
         private void LeftDirButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(1, null);
+            ChangePage(1, null, OutputComboBox.SelectedIndex);
 
         }
 
         private void RightDirButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(2, null);
+            ChangePage(2, null, OutputComboBox.SelectedIndex);
 
         }
 
@@ -208,21 +172,7 @@ namespace abdeevLanguage
         private void OutputComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateClients();
-        }
 
-        private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
-        }
-
-        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateClients();
         }
     }
 }

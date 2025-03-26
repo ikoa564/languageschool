@@ -102,7 +102,7 @@ namespace abdeevLanguage
                 PageListBox.SelectedIndex = CurrentPage;
 
                 min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                //FirstPageCountTB.Text = min.ToString();
+                FirstPageCountTB.Text = min.ToString();
 
                 ClientListView.ItemsSource = CurrentPageList;
                 ClientListView.Items.Refresh();
@@ -121,6 +121,7 @@ namespace abdeevLanguage
             SortComboBox.SelectedIndex = 0;
             FilterComboBox.SelectedIndex = 0;
             UpdateClients();
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
         }
 
         public void UpdateClients()
@@ -157,7 +158,6 @@ namespace abdeevLanguage
 
 
             FirstPageCountTB.Text = currentClient.Count.ToString();
-            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TableList = currentClient;
             ChangePage(0, 0);
         }

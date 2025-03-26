@@ -112,7 +112,7 @@
                     <TextBlock>Все</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <Button Margin="25,0,0,0" Name="LeftDirButton" Content="&lt;" Width="23" Height="30" Click="LeftDirButton_Click"></Button>
+            <Button Margin="25,0,0,0" Name="LeftDirButton" Content="&lt;" Width="20" Height="20" Click="LeftDirButton_Click"></Button>
             <ListBox FontSize="20" Name="PageListBox" MouseUp="PageListBox_MouseUp">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -120,7 +120,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button Name="RightDirButton" Content="&gt;" Width="23" Height="30" Click="RightDirButton_Click"></Button>
+            <Button Name="RightDirButton" Content="&gt;" Width="20" Height="20" Click="RightDirButton_Click"></Button>
 
         </StackPanel>
 

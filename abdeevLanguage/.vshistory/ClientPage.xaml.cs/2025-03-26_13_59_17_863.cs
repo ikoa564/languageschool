@@ -102,7 +102,7 @@ namespace abdeevLanguage
                 PageListBox.SelectedIndex = CurrentPage;
 
                 min = CurrentPage * currentOutputPages + currentOutputPages < CountRecords ? CurrentPage * currentOutputPages + currentOutputPages : CountRecords;
-                //FirstPageCountTB.Text = min.ToString();
+                FirstPageCountTB.Text = min.ToString();
 
                 ClientListView.ItemsSource = CurrentPageList;
                 ClientListView.Items.Refresh();
@@ -121,43 +121,43 @@ namespace abdeevLanguage
             SortComboBox.SelectedIndex = 0;
             FilterComboBox.SelectedIndex = 0;
             UpdateClients();
+            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
         }
 
         public void UpdateClients()
         {
             var currentClient = AbdeevLanguageEntities.GetContext().Client.ToList();
 
-            //switch (FilterComboBox.SelectedIndex)
-            //{
-            //    //case 0:
-            //    //    currentClient = currentClient.Where(p => p.Gen);
-            //    //    break;
-            //    case 1:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
-            //        break;
-            //    case 2:
-            //        currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
-            //        break;
-            //}
+            switch (FilterComboBox.SelectedIndex)
+            {
+                //case 0:
+                //    currentClient = currentClient.Where(p => p.Gen);
+                //    break;
+                case 1:
+                    currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
+                    break;
+                case 2:
+                    currentClient = currentClient.Where(p => p.GenderCode == "м").ToList();
+                    break;
+            }
 
-            //currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) || 
-            //p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
-            //p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
+            currentClient = currentClient.Where(p => p.FirstName.ToLower().Contains(SearchTB.Text.ToLower()) ||
+            p.LastName.ToLower().Contains(SearchTB.Text.ToLower()) || 
+            p.Patronymic.ToLower().Contains(SearchTB.Text.ToLower()) ||
+            p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
 
 
-            //if (SortComboBox.SelectedIndex == 1)
-            //{
-            //    currentClient = currentClient.OrderBy(p => p.LastName).ToList();
-            //}
-            //if (SortComboBox.SelectedIndex == 3)
-            //    currentClient = currentClient.OrderBy(p => p.CountVisit).ToList();
+            if (SortComboBox.SelectedIndex == 1)
+            {
+                currentClient = currentClient.OrderBy(p => p.FirstName).ToList();
+            }
+            if (SortComboBox.SelectedIndex == 2)
+                currentClient = currentClient.OrderBy(p => p.CountVisit).ToList();
 
-            //ClientListView.ItemsSource = currentClient;
+            ClientListView.ItemsSource = currentClient;
 
 
             FirstPageCountTB.Text = currentClient.Count.ToString();
-            SecondPageCountTB.Text = " из " + AbdeevLanguageEntities.GetContext().Client.ToList().Count().ToString();
             TableList = currentClient;
             ChangePage(0, 0);
         }
