@@ -230,7 +230,6 @@ namespace abdeevLanguage
             {
                 AbdeevLanguageEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 ClientListView.ItemsSource = AbdeevLanguageEntities.GetContext().Client.ToList();
-                UpdateClients();
             }
         }
 
@@ -241,7 +240,7 @@ namespace abdeevLanguage
 
         private void AddClientBtn_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage(null));
+            Manager.MainFrame.Navigate(new AddEditPage(null);
         }
     }
 }

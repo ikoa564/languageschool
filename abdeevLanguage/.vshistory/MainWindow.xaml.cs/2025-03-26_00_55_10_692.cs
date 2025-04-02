@@ -30,7 +30,6 @@ namespace abdeevLanguage
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.GoBack();
 
         }
 

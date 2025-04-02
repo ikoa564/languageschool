@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,36 +86,20 @@ namespace abdeevLanguage
 
         bool IsValidEmail(string email)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (!Regex.IsMatch(_currentClient.Email, pattern))
-                return false;
-            return true;
-
-        }
-
-        private static bool IsValidDomain(string domain)
-        {
-            // Минимальные требования к доменной части
-            if (string.IsNullOrEmpty(domain) || domain.Length < 3)
+            if (string.IsNullOrWhiteSpace(email))
                 return false;
 
-            // Должна быть хотя бы одна точка
-            if (!domain.Contains('.'))
-                return false;
-
-            // Проверка на недопустимые символы
-            foreach (char c in domain)
+            try
             {
-                if (!char.IsLetterOrDigit(c) && c != '.' && c != '-')
-                    return false;
+                // Пытаемся создать объект MailAddress
+                _ = new MailAddress(email);
+                return true;
             }
-
-            // Домен не может начинаться/заканчиваться точкой или дефисом
-            if (domain.StartsWith(".") || domain.EndsWith(".") ||
-                domain.StartsWith("-") || domain.EndsWith("-"))
+            catch
+            {
+                // Если возникает исключение, email невалиден
                 return false;
-
-            return true;
+            }
         }
 
         bool isValidFIOString(string str)

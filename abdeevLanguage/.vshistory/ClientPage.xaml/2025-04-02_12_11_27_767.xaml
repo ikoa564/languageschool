@@ -37,7 +37,7 @@
                     <TextBlock>по количеству посещений</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <Button Margin="25,0,0,0" Content="Добавить клиента" Width="250" Name="AddClientBtn" Click="AddClientBtn_Click" ></Button>
+            <Button Content="Добавить клиента" Width="250" Name="AddClientBtn" Click="AddClientBtn_Click" ></Button>
 
         </WrapPanel>
         

@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,36 +85,21 @@ namespace abdeevLanguage
 
         bool IsValidEmail(string email)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (!Regex.IsMatch(_currentClient.Email, pattern))
-                return false;
-            return true;
+            var trimmedEmail = email.Trim();
 
-        }
-
-        private static bool IsValidDomain(string domain)
-        {
-            // Минимальные требования к доменной части
-            if (string.IsNullOrEmpty(domain) || domain.Length < 3)
-                return false;
-
-            // Должна быть хотя бы одна точка
-            if (!domain.Contains('.'))
-                return false;
-
-            // Проверка на недопустимые символы
-            foreach (char c in domain)
+            if (trimmedEmail.EndsWith("."))
             {
-                if (!char.IsLetterOrDigit(c) && c != '.' && c != '-')
-                    return false;
-            }
-
-            // Домен не может начинаться/заканчиваться точкой или дефисом
-            if (domain.StartsWith(".") || domain.EndsWith(".") ||
-                domain.StartsWith("-") || domain.EndsWith("-"))
                 return false;
-
-            return true;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         bool isValidFIOString(string str)

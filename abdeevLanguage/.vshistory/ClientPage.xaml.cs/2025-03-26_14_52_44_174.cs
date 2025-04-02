@@ -130,6 +130,9 @@ namespace abdeevLanguage
 
             switch (FilterComboBox.SelectedIndex)
             {
+                //case 0:
+                //    currentClient = currentClient.Where(p => p.Gen);
+                //    break;
                 case 1:
                     currentClient = currentClient.Where(p => p.GenderCode == "ж").ToList();
                     break;
@@ -222,26 +225,6 @@ namespace abdeevLanguage
         private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateClients();
-        }
-
-        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if(Visibility == Visibility.Visible)
-            {
-                AbdeevLanguageEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                ClientListView.ItemsSource = AbdeevLanguageEntities.GetContext().Client.ToList();
-                UpdateClients();
-            }
-        }
-
-        private void EditBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Client));
-        }
-
-        private void AddClientBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Manager.MainFrame.Navigate(new AddEditPage(null));
         }
     }
 }

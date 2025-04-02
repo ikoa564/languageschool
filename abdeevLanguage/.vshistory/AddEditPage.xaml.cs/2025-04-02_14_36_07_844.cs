@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,36 +85,21 @@ namespace abdeevLanguage
 
         bool IsValidEmail(string email)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            if (!Regex.IsMatch(_currentClient.Email, pattern))
-                return false;
-            return true;
+            var trimmedEmail = email.Trim();
 
-        }
-
-        private static bool IsValidDomain(string domain)
-        {
-            // Минимальные требования к доменной части
-            if (string.IsNullOrEmpty(domain) || domain.Length < 3)
-                return false;
-
-            // Должна быть хотя бы одна точка
-            if (!domain.Contains('.'))
-                return false;
-
-            // Проверка на недопустимые символы
-            foreach (char c in domain)
+            if (trimmedEmail.EndsWith("."))
             {
-                if (!char.IsLetterOrDigit(c) && c != '.' && c != '-')
-                    return false;
-            }
-
-            // Домен не может начинаться/заканчиваться точкой или дефисом
-            if (domain.StartsWith(".") || domain.EndsWith(".") ||
-                domain.StartsWith("-") || domain.EndsWith("-"))
                 return false;
-
-            return true;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         bool isValidFIOString(string str)
@@ -135,24 +118,19 @@ namespace abdeevLanguage
         }
         bool isValidPhoneString(string str)
         {
+            bool isValid = true;
+
             foreach (char c in str)
             {
-                // Нормализация пробелов и тире (если нужно)
-                char normalizedChar = c == '\u00A0' ? ' ' : c; // Замена неразрывного пробела
-                normalizedChar = normalizedChar == '—' ? '-' : normalizedChar; // Замена длинного тире
-
-                if (!char.IsDigit(normalizedChar)
-                    && normalizedChar != ' '
-                    && normalizedChar != '+'
-                    && normalizedChar != '-'
-                    && normalizedChar != '('
-                    && normalizedChar != ')')
+                if (!char.IsDigit(c) && c!=' ' && c != '+' && c != '-' && c != '(' && c != ')' && c != '-')
                 {
-                    return false;
+                    isValid = false;
+                    break;
                 }
             }
-            return true;
+            return isValid;
         }
+
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
@@ -190,7 +168,7 @@ namespace abdeevLanguage
             else
             {
                 string ph = _currentClient.Phone.Replace("(", "").Replace("-", "").Replace("+", "").Replace(")", "");
-                if (ph.Length > 15 || ph.Length < 8)
+                if (ph.Length > 12 || ph.Length < 9)
                     errors.AppendLine("Введите правильный телефон (несовпадение длины)!");
                 if (!isValidPhoneString(_currentClient.Phone))
                     errors.AppendLine("Телефон может содержать только цифры, символы: плюс, минус, открывающая и закрывающая круглые скобки и пробел!");

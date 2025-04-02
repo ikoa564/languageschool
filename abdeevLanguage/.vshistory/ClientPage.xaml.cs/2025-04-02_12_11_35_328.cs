@@ -230,7 +230,6 @@ namespace abdeevLanguage
             {
                 AbdeevLanguageEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 ClientListView.ItemsSource = AbdeevLanguageEntities.GetContext().Client.ToList();
-                UpdateClients();
             }
         }
 
