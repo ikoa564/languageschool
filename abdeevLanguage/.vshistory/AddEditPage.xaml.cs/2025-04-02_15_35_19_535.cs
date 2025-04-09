@@ -85,15 +85,38 @@ namespace abdeevLanguage
             return System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Path.GetDirectoryName(exePath)));
         }
 
-        static bool IsValidEmail(string email)
+        bool IsValidEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (!Regex.IsMatch(_currentClient.Email, pattern))
+                return false;
+            return true;
+
+        }
+
+        private static bool IsValidDomain(string domain)
+        {
+            // Минимальные требования к доменной части
+            if (string.IsNullOrEmpty(domain) || domain.Length < 3)
                 return false;
 
-            string pattern = @"^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*\.)+[a-zA-Z]{2,}$";
-            Regex regex = new Regex(pattern);
+            // Должна быть хотя бы одна точка
+            if (!domain.Contains('.'))
+                return false;
 
-            return regex.IsMatch(email);
+            // Проверка на недопустимые символы
+            foreach (char c in domain)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '.' && c != '-')
+                    return false;
+            }
+
+            // Домен не может начинаться/заканчиваться точкой или дефисом
+            if (domain.StartsWith(".") || domain.EndsWith(".") ||
+                domain.StartsWith("-") || domain.EndsWith("-"))
+                return false;
+
+            return true;
         }
 
         bool isValidFIOString(string str)
